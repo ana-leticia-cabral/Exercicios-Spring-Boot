@@ -1,8 +1,17 @@
 package app.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+// Mapeamento objeto relacional. A classe Carro vai virar uma entidade no banco.
+@Entity
 public class Carro {
 
-	private int idCarro;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Fazer um auto incremento pro id toda vez que salvar o objeto
+	private Long id;
 	private String nome;
 	private String marca;
 	private String modelo;
@@ -40,12 +49,12 @@ public class Carro {
 		this.anoFabricacao = anoFabricacao;
 	}
 
-	public int getIdCarro() {
-		return idCarro;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdCarro(int idCarro) {
-		this.idCarro = idCarro;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

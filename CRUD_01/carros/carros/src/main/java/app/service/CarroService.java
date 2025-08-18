@@ -1,78 +1,50 @@
 package app.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Carro;
+import app.repository.CarroRepository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarroService {
 
-	private static List<Carro> carrosSalvos = new ArrayList<>();
+	@Autowired
+	private CarroRepository carroRepository;
 
-	private int id = 0;
-
-	// CREATE
 	public String save(Carro carro) {
-		id += 1;
-		carro.setIdCarro(id);
-		carrosSalvos.add(carro);
+
+		this.carroRepository.save(carro);
 		return "Carro salvo com sucesso!";
 	}
 
-	// READ
-	public static List<Carro> read() {
-		if (carrosSalvos == null || carrosSalvos.isEmpty()) {
-			return null;
-		} else {
-			return carrosSalvos;
-		}
+	public List<Carro> read() {
+
+		List<Carro> carro = this.carroRepository.findAll();
+		return carro;
 
 	}
 
-	// FIND BY ID
-	public Carro findById(int id) {
+	public Optional<Carro> findById(Long id) {
 
-		if (carrosSalvos == null || carrosSalvos.isEmpty()) {
-			return null;
-		}
-		for (Carro c : carrosSalvos) {
-			if (c.getIdCarro() == id) {
-				return c;
-			}
-
-		}
-		return null; // Se não encontrar retornar null
+		Optional<Carro> carro = this.carroRepository.findById(id);
+		return carro;
 	}
 
-	// UPDATE
-	public String updateById(int id, Carro carro) {
+	public String updateById(Long id, Carro carro) {
 
-		if (findById(id) == null) {
-			return "Carro não encontrado para atualizar os dados!";
-		} else {
-			Carro carroExistente = findById(id);
+		this.updateById(id, carro);
+		return "Carro atualizado com sucesso!";
 
-			carroExistente.setNome(carro.getNome());
-			carroExistente.setMarca(carro.getMarca());
-			carroExistente.setModelo(carro.getModelo());
-			carroExistente.setAnoFabricacao(carro.getAnoFabricacao());
-
-			return "Dados alterados com sucesso!";
-
-		}
 	}
 
-	// DELETE
-	public String deleteById(int id) {
-		if (findById(id) == null) {
-			return "Carro não encontrado!";
-		} else {
-			Carro carroExistente = findById(id);
-			carrosSalvos.remove(carroExistente);
-			return "Carro deletado com sucesso!";
-		}
+	public String deleteById(Long id) {
+
+		this.carroRepository.deleteById(id);
+		return "Carro deletado com sucesso!";
+
 	}
 }

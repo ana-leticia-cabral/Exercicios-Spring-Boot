@@ -16,6 +16,7 @@ import app.entity.Carro;
 import app.service.CarroService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/carro")
@@ -24,7 +25,6 @@ public class CarroController {
 	@Autowired
 	private CarroService carroService;
 
-	// Insere um novo carro com os dados do JSON
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody Carro carro) {
 
@@ -37,23 +37,21 @@ public class CarroController {
 
 	}
 
-	// Retorna a lista de carros
 	@GetMapping("/read")
 	public ResponseEntity<List<Carro>> read() {
 		try {
 
-			return new ResponseEntity<List<Carro>>(CarroService.read(), HttpStatus.OK);
+			return new ResponseEntity<List<Carro>>(this.carroService.read(), HttpStatus.OK);
 
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	// Retorna o carro com id = {id}
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Carro> findById(@PathVariable int id) {
+	public ResponseEntity<Optional<Carro>> findById(@PathVariable Long id) {
 		try {
-			Carro carro = this.carroService.findById(id);
+			Optional<Carro> carro = this.carroService.findById(id);
 			return new ResponseEntity<>(carro, HttpStatus.OK);
 		} catch (Exception e) {
 
@@ -61,9 +59,8 @@ public class CarroController {
 		}
 	}
 
-	// Altera os dados do carro com id = {id} com os dados do JSON
 	@PutMapping("/updateById/{id}")
-	public ResponseEntity<String> updateById(@PathVariable int id, @RequestBody Carro carro) {
+	public ResponseEntity<String> updateById(@PathVariable Long id, @RequestBody Carro carro) {
 		try {
 			String mensagem = this.carroService.updateById(id, carro);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
@@ -72,9 +69,8 @@ public class CarroController {
 		}
 	}
 
-	// Deletar o carro com id = {id}
 	@DeleteMapping("/deleteById/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable int id) {
+	public ResponseEntity<String> deleteById(@PathVariable Long id) {
 		try {
 			String mensagem = this.carroService.deleteById(id);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
