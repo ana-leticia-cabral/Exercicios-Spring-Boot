@@ -1,5 +1,6 @@
 # 📚 Atividade Proposta
-Realizar um CRUD de Carros, *sem utilizar banco de dados*, com os seguintes atributos:
+Realizar um CRUD de Carros, com os seguintes atributos:
+* id
 * nome
 * marca
 * modelo
