@@ -1,5 +1,5 @@
 # 📚 Atividade Proposta
-Realizar um CRUD de Carros, com os seguintes atributos:
+Realizar um CRUD para a entidade Carro com os seguintes atributos:
 * id
 * nome
 * marca
