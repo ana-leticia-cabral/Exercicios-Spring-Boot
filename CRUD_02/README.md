@@ -1,5 +1,5 @@
 # 📚 Atividade Proposta
-Realizar um CRUD de Livros, *sem utilizar banco de dados*, com os seguintes atributos:
+Realizar um CRUD para a entidade Livro com os seguintes atributos:
 * titulo
 * autor
 * editora
