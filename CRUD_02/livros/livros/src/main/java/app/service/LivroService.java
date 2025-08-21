@@ -30,13 +30,15 @@ public class LivroService {
 
 	public String updateById(Long id, Livro livro) {
 		if (this.findById(id) == null) {
-			return "Livro não encontrado";
+			return "Livro não encontrado!";
 		} else {
 			Livro livroEncontrado = this.findById(id);
 			livroEncontrado.setTitulo(livro.getTitulo());
 			livroEncontrado.setAutor(livro.getAutor());
 			livroEncontrado.setEditora(livro.getEditora());
 			livroEncontrado.setAno(livro.getAno());
+			
+			this.livroRepository.save(livroEncontrado);
 
 			return "Livro atualizado com sucesso!";
 		}
@@ -44,6 +46,6 @@ public class LivroService {
 
 	public String deleteById(Long id) {
 		this.livroRepository.deleteById(id);
-		return "Livro deletado com sucesso";
+		return "Livro deletado com sucesso!";
 	}
 }
