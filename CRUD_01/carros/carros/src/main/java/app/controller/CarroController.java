@@ -16,7 +16,7 @@ import app.entity.Carro;
 import app.service.CarroService;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/carro")
@@ -49,10 +49,10 @@ public class CarroController {
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Optional<Carro>> findById(@PathVariable Long id) {
+	public ResponseEntity<Carro> findById(@PathVariable Long id) {
 		try {
-			Optional<Carro> carro = this.carroService.findById(id);
-			return new ResponseEntity<>(carro, HttpStatus.OK);
+			Carro carro = this.carroService.findById(id);
+			return new ResponseEntity<Carro>(carro, HttpStatus.OK);
 		} catch (Exception e) {
 
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

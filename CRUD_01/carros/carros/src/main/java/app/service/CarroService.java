@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Carro;
+
 import app.repository.CarroRepository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CarroService {
@@ -28,23 +29,38 @@ public class CarroService {
 
 	}
 
-	public Optional<Carro> findById(Long id) {
+	public Carro findById(Long id) {
 
-		Optional<Carro> carro = this.carroRepository.findById(id);
-		return carro;
+		return this.carroRepository.findById(id).orElse(null);
+		
 	}
 
 	public String updateById(Long id, Carro carro) {
 
-		this.updateById(id, carro);
-		return "Carro atualizado com sucesso!";
+		if (this.findById(id) == null) {
+			return "Carro não encontrado!";
+		} else {
+			Carro carroEncontrado = this.findById(id);
+			carroEncontrado.setNome(carro.getNome());
+			carroEncontrado.setMarca(carro.getMarca());
+			carroEncontrado.setModelo(carro.getModelo());
+			carroEncontrado.setAnoFabricacao(carro.getAnoFabricacao());
+			
+			this.carroRepository.save(carroEncontrado);
+
+			return "Carro atualizado com sucesso!";
+		}
 
 	}
 
 	public String deleteById(Long id) {
-
-		this.carroRepository.deleteById(id);
-		return "Carro deletado com sucesso!";
+        if(this.findById(id) == null) {
+        	return "Carro não encontrado!";
+        } else {
+        	this.carroRepository.deleteById(id);
+    		return "Carro deletado com sucesso!";
+        }
+		
 
 	}
 }
