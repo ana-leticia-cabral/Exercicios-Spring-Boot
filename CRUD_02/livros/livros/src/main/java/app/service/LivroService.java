@@ -45,7 +45,11 @@ public class LivroService {
 	}
 
 	public String deleteById(Long id) {
-		this.livroRepository.deleteById(id);
-		return "Livro deletado com sucesso!";
+		if(this.findById(id) == null) {
+			return "Livro não encontrado!";
+		} else {
+		    this.livroRepository.deleteById(id);
+		    return "Livro deletado com sucesso!";
+		}
 	}
 }
