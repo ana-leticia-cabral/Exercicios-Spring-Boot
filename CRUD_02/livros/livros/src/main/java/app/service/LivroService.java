@@ -1,68 +1,49 @@
 package app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Livro;
+import app.repository.LivroRepository;
 
 @Service
 public class LivroService {
 
-	private List<Livro> livrosSalvos = new ArrayList<>();
-    
-	private int id = 0;
-    
-	public String create(Livro livro) {
-	    	id += 1;
-	    	livro.setIdLivro(id);
-		livrosSalvos.add(livro);
+	@Autowired
+	private LivroRepository livroRepository;
+
+	public String save(Livro livro) {
+		this.livroRepository.save(livro);
 		return "Livro salvo com sucesso!";
 	}
 
-	public Livro findById(int id) {
-		if (livrosSalvos == null || livrosSalvos.isEmpty()) {
-			return null;
-		}
+	public Livro findById(Long id) {
+		return this.livroRepository.findById(id).orElse(null); // retorna null se não achar.
 
-		for (Livro l : livrosSalvos) {
-			if (l.getIdLivro() == id) {
-				return l;
-			}
-		}
-		return null;
 	}
 
 	public List<Livro> read() {
-		return livrosSalvos;
+		return this.livroRepository.findAll();
 	}
 
-	public String updateById(int id, Livro livro) {
-		if (findById(id) == null) {
-			return null;
+	public String updateById(Long id, Livro livro) {
+		if (this.findById(id) == null) {
+			return "Livro não encontrado";
 		} else {
-
-			Livro livroEncontrado = findById(id);
-
+			Livro livroEncontrado = this.findById(id);
 			livroEncontrado.setTitulo(livro.getTitulo());
 			livroEncontrado.setAutor(livro.getAutor());
 			livroEncontrado.setEditora(livro.getEditora());
 			livroEncontrado.setAno(livro.getAno());
 
 			return "Livro atualizado com sucesso!";
-
 		}
 	}
 
-	public String deleteById(int id) {
-		if (findById(id) == null) {
-			return null;
-		} else {
-			Livro livroEncontrado = findById(id);
-			livrosSalvos.remove(livroEncontrado);
-
-			return "Livro removido com sucesso!";
-		}
+	public String deleteById(Long id) {
+		this.livroRepository.deleteById(id);
+		return "Livro deletado com sucesso";
 	}
 }

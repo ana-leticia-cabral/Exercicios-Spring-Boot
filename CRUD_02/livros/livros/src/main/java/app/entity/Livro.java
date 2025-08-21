@@ -1,8 +1,17 @@
 package app.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Livro {
 
-	private int idLivro;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String titulo;
 	private String autor;
 	private String editora;
@@ -40,12 +49,14 @@ public class Livro {
 		this.ano = ano;
 	}
 
-	public int getIdLivro() {
-		return idLivro;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdLivro(int idLivro) {
-		this.idLivro = idLivro;
+	public void setId(Long id) {
+		this.id = id;
 	}
+
+	
 
 }

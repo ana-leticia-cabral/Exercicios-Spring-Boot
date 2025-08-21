@@ -24,10 +24,10 @@ public class LivroController {
 	@Autowired
 	private LivroService livroService;
 
-	@PostMapping("/create")
-	public ResponseEntity<String> create(@RequestBody Livro livro) {
+	@PostMapping("/save")
+	public ResponseEntity<String> save(@RequestBody Livro livro) {
 		try {
-			String mensagem = this.livroService.create(livro);
+			String mensagem = this.livroService.save(livro);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu erro ao salvar o livro!", HttpStatus.BAD_REQUEST);
@@ -35,7 +35,7 @@ public class LivroController {
 	}
 
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Livro> findById(@PathVariable int id) {
+	public ResponseEntity<Livro> findById(@PathVariable Long id) {
 		try {
 			Livro livro = this.livroService.findById(id);
 			return new ResponseEntity<Livro>(livro, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class LivroController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updateById(@PathVariable int id, @RequestBody Livro livro) {
+	public ResponseEntity<String> updateById(@PathVariable Long id, @RequestBody Livro livro) {
 		try {
 			String mensagem = this.livroService.updateById(id, livro);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
@@ -63,16 +63,16 @@ public class LivroController {
 			return new ResponseEntity<String>("Algo deu errado ao atualizar os dados!", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable int id){
+	public ResponseEntity<String> deleteById(@PathVariable Long id) {
 		try {
 			String mensagem = this.livroService.deleteById(id);
 			return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Algo deu errado ao deletar o livro!", HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
 
 }
